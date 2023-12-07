@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ Titulo }}</title>
+    <link rel="stylesheet" href="../static/estilo.css">
+</head>
+<body>
+      <div class="atletasVolei-card">
+          <div class="page-header">
+              <h1>{{ Titulo }}</h1>
+          </div>
+      <form action='/alterar' method="post">
+        <fieldset>
+          <div class="form-group">
+            <label for="nome">Nome </label>
+            <input type="text" id="nome" name="nome" class="form-control" value = {{ atletas.nome}}>
+          </div>
+          <p></p>
+
+          <div class="form-group">
+            <label for="idade">Idade </label>
+            <input type="text" id="idade" name="idade" class="form-control" value = {{ atletas.idade}} >
+          </div>
+          <p></p>
+
+
+          <div class="form-group">
+            <label for="posicao">Posição </label>
+            <select id ="posicao" name ="posicao" class="form-control" value = {{ atletas.posicao }}>
+                <option>Levantador</option>
+                <option>Oposto</option>
+                <option>Ponteiro</option>
+                <option>Central</option>
+                <option>Líbero</option>
+            </select>
+          </div>
+          <p></p>
+
+
+          <div class="form-group">
+            <label for="experiencia">Experiência </label>
+            <input type="text" id="experiencia" name="experiencia" class="form-control" value = {{ atletas.experiencia}} >
+          </div>
+          <p></p>
+
+          <div class="form-group">
+            <label for="cidade">Cidade </label>
+            <input type="text" id="cidade" name="cidade" class="form-control" value = {{ atletas.cidade}} >
+          </div>
+          <p></p>
+
+          <div class="form-group">
+            <label for="estado">Estado </label>
+            <select id="estado" name="estado" class="form-control" value = {{ atletas.estado}}>
+                <option>SP</option>
+                <option>RJ</option>
+                <option>MG</option>
+                <option>SC</option>
+                <option>RO</option>
+            </select>
+          </div>
+          <p></p>
+
+          <div class="form-group">
+            <label for="dia">Dia </label>
+            <input type="date" id="dia" name="dia" class="form-control" value = {{ atletas.dia}} >
+          </div>
+          <p></p>
+
+          <div class="form-group">
+            <label for="hora">Hora </label>
+            <select id="hora" name="hora" class="form-control" value = {{ atletas.hora}}>
+                <option>08:00</option>
+                <option>09:00</option>
+                <option>10:00</option>
+                <option>11:00</option>
+                <option>12:00</option>
+            </select>
+          </div>
+          <p></p>
+
+
+          <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+        </fieldset>
+      </form>
+    </div>
+</body>
+</html>
