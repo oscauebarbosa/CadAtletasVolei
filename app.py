@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, flash
 app = Flask(__name__)
+app.secret_key = 'Senai'
+
 
 class  volleyball_players:
     def __init__(self, nome, idade, posicao, experiencia, cidade, estado, dia, hora):
@@ -18,27 +20,37 @@ lista = []
 
 @app.route('/atletas')
 def  volleyball_players2():
-    return render_template('Volei.html', Titulo ="Atletas: ", ListaAtletas = lista)
+    if 'Usuario_Logado' not in session:
+        return redirect('/')
+    else:
+        return render_template('Volei.html', Titulo ="Atletas: ", ListaAtletas = lista)
 
 
 @app.route('/cadastro')
 def cadastro():
-    return render_template('Cadastro.html', Titulo = "Cadastro de Atletas")
+    if 'Usuario_Logado' not in session:
+        return redirect('/')
+    else:
+        return render_template('Cadastro.html', Titulo = "Cadastro de Atletas")
 
 
 @app.route('/criar', methods= ['POST'])
 def criar():
-    nome = request.form['nome']
-    idade = request.form['idade']
-    posicao = request.form['posicao']
-    experiencia = request.form['experiencia']
-    cidade = request.form['cidade']
-    estado = request.form['estado']
-    dia = request.form['dia']
-    hora = request.form['hora']
-    obj =  volleyball_players(nome, idade, posicao, experiencia, cidade, estado, dia, hora)
-    lista.append(obj)
-    return redirect('/atletas')
+    if 'salvar' in request.form:
+        nome = request.form['nome']
+        idade = request.form['idade']
+        posicao = request.form['posicao']
+        experiencia = request.form['experiencia']
+        cidade = request.form['cidade']
+        estado = request.form['estado']
+        dia = request.form['dia']
+        hora = request.form['hora']
+        obj =  volleyball_players(nome, idade, posicao, experiencia, cidade, estado, dia, hora)
+        lista.append(obj)
+        return redirect('/atletas')
+    elif 'deslogar' in request.form:
+        return redirect('/')
+
 
 @app.route('/excluir/<nomeatletas>', methods=['GET','DELETE'])
 def excluir(nomeatletas) :
@@ -71,6 +83,21 @@ def alterar():
     return redirect('/atletas')
 
 
+@app.route('/')
+def login():
+    session.clear()
+    return render_template('Login.html', Titulo = "Faça seu login")
+
+
+@app.route('/autenticar', methods = ['POST'])
+def autenticar():
+    if request.form['usuario'] == 'Caue' and request.form['senha']=='123':
+        session['Usuario_Logado'] = request.form['usuario']
+        flash('Usuario Logado com Sucesso')
+        return redirect('/cadastro')
+    else:
+        flash('Usuario não encontrado')
+        return redirect('/')
 
 
 
